@@ -1,0 +1,89 @@
+.timeline { display: flex; flex-direction: column; }
+
+.entry {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 1.5rem;
+}
+
+.marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.markerDot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--gradient-signal);
+  box-shadow: 0 0 0 4px var(--bg-sunken);
+  flex-shrink: 0;
+  margin-top: 2.1rem;
+}
+.markerLine {
+  flex: 1;
+  width: 2px;
+  background: var(--border);
+  margin: 0.4rem 0 0.4rem 0;
+}
+
+.card { padding: 1.75rem clamp(1.25rem, 3vw, 2rem); margin-bottom: 2rem; }
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+.role { display: flex; align-items: center; gap: 0.55rem; font-size: 1.15rem; }
+.roleIcon { color: var(--signal-blue); font-size: 0.9em; }
+.org { color: var(--hydro-teal); font-weight: 500; font-size: 0.95rem; margin-top: 0.2rem; }
+
+.meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.3rem; }
+.date {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+.location {
+  display: flex; align-items: center; gap: 0.35rem;
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+}
+
+.responsibilities { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+.responsibilities li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+.responsibilities li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.55em;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--signal-blue);
+}
+
+.achievements {
+  background: var(--bg-sunken);
+  border-radius: var(--radius-s);
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.2rem;
+}
+.achieveLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hydro-teal);
+  margin-bottom: 0.4rem;
+}
+.achievements li { font-size: 0.88rem; color: var(--text-secondary); padding-left: 0.9rem; position: relative; }
+.achievements li::before { content: '✓'; position: absolute; left: 0; color: var(--success); font-size: 0.75rem; }
+
+.tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }

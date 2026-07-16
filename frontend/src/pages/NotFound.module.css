@@ -1,0 +1,23 @@
+.wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-deep);
+  text-align: center;
+  padding: 2rem;
+}
+.content { max-width: 420px; }
+.code {
+  font-family: var(--font-mono);
+  font-size: 5rem;
+  font-weight: 700;
+  background: var(--gradient-signal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.content h1 { color: #fff; font-size: 1.8rem; margin-bottom: 0.75rem; }
+.content p { color: #b7c2d4; margin-bottom: 2rem; }

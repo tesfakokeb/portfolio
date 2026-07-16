@@ -1,0 +1,95 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Signature direction: "Signal & Contour" — a research-instrument aesthetic
+   drawn from hydrological contour maps and satellite telemetry, rendered in
+   a premium navy/blue palette with a teal "water" accent.
+   ========================================================================== */
+
+:root {
+  /* ---- Palette (named) ---- */
+  --ink: #060b14;          /* deepest navy — dark-mode base */
+  --navy-900: #0b1b2e;
+  --navy-800: #122236;
+  --navy-700: #1b3352;
+  --navy-600: #2a4667;
+  --signal-blue: #2e7dd1;  /* primary */
+  --signal-blue-light: #5b9be0;
+  --hydro-teal: #4fd3c4;   /* accent — water / remote sensing */
+  --paper: #f7f9fc;        /* light-mode base */
+  --paper-dim: #edf1f7;
+  --gray-100: #eef1f6;
+  --gray-300: #c7d0dd;
+  --gray-500: #8593a8;
+  --gray-700: #4c5a70;
+  --white: #ffffff;
+  --danger: #e0665a;
+  --success: #45b58c;
+
+  --gradient-signal: linear-gradient(135deg, var(--signal-blue) 0%, var(--hydro-teal) 100%);
+  --gradient-deep: linear-gradient(160deg, var(--navy-900) 0%, var(--ink) 100%);
+
+  /* ---- Typography ---- */
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+
+  --fs-display-xl: clamp(2.75rem, 6vw, 5rem);
+  --fs-display-l: clamp(2.1rem, 4vw, 3.25rem);
+  --fs-display-m: clamp(1.6rem, 2.6vw, 2.25rem);
+  --fs-title: clamp(1.25rem, 1.6vw, 1.5rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-micro: 0.75rem;
+
+  /* ---- Layout ---- */
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 22px;
+  --radius-full: 999px;
+  --max-width: 1240px;
+  --gutter: clamp(1.25rem, 5vw, 4rem);
+  --section-pad: clamp(4rem, 9vw, 8rem);
+
+  /* ---- Motion ---- */
+  --ease-signal: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.2s;
+  --dur-med: 0.45s;
+  --dur-slow: 0.9s;
+
+  /* ---- Shadows ---- */
+  --shadow-s: 0 2px 10px rgba(11, 27, 46, 0.06);
+  --shadow-m: 0 10px 30px rgba(11, 27, 46, 0.10);
+  --shadow-l: 0 24px 60px rgba(11, 27, 46, 0.16);
+  --shadow-glow: 0 0 0 1px rgba(79, 211, 196, 0.18), 0 12px 40px rgba(46, 125, 209, 0.18);
+}
+
+/* ---- Light theme (default) ---- */
+:root,
+[data-theme='light'] {
+  --bg: var(--paper);
+  --bg-elevated: var(--white);
+  --bg-sunken: var(--paper-dim);
+  --text-primary: var(--navy-900);
+  --text-secondary: var(--gray-700);
+  --text-muted: var(--gray-500);
+  --border: var(--gray-300);
+  --border-soft: rgba(11, 27, 46, 0.08);
+  --nav-bg: rgba(247, 249, 252, 0.72);
+  --card-bg: var(--white);
+  --overlay: rgba(6, 11, 20, 0.55);
+}
+
+/* ---- Dark theme ---- */
+[data-theme='dark'] {
+  --bg: var(--ink);
+  --bg-elevated: var(--navy-900);
+  --bg-sunken: #04070d;
+  --text-primary: #eef2f8;
+  --text-secondary: #b7c2d4;
+  --text-muted: #7c8aa0;
+  --border: var(--navy-700);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --nav-bg: rgba(6, 11, 20, 0.72);
+  --card-bg: var(--navy-900);
+  --overlay: rgba(0, 0, 0, 0.6);
+}

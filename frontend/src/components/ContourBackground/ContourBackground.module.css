@@ -1,0 +1,24 @@
+.wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.layer path {
+  fill: none;
+  stroke: var(--signal-blue);
+  stroke-width: 1;
+  opacity: 0.14;
+}
+
+.layer:last-child path { stroke: var(--hydro-teal); opacity: 0.16; }
+
+.onDark path { opacity: 0.22; }

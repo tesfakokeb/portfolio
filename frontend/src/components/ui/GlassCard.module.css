@@ -1,0 +1,20 @@
+.card {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-s);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform var(--dur-med) var(--ease-signal), box-shadow var(--dur-med) var(--ease-signal), border-color var(--dur-med) var(--ease-signal);
+}
+
+[data-theme='dark'] .card {
+  background: rgba(18, 34, 54, 0.6);
+}
+
+.hover:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-l);
+  border-color: rgba(79, 211, 196, 0.35);
+}

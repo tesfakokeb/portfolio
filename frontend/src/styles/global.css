@@ -1,0 +1,127 @@
+@import './variables.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: var(--fs-body);
+  transition: background-color var(--dur-med) var(--ease-signal), color var(--dur-med) var(--ease-signal);
+  overflow-x: hidden;
+}
+
+/* Prevent theme-load flash: applied inline before hydration, see index.html-injected script in main.jsx */
+body.theme-ready {
+  transition: background-color var(--dur-med) var(--ease-signal), color var(--dur-med) var(--ease-signal);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+p { color: var(--text-secondary); }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol { list-style: none; }
+
+img, svg { display: block; max-width: 100%; }
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; }
+
+/* ---- Focus visibility (accessibility) ---- */
+:focus-visible {
+  outline: 2px solid var(--hydro-teal);
+  outline-offset: 3px;
+  border-radius: var(--radius-s);
+}
+
+/* ---- Custom scrollbar ---- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg);
+}
+[data-theme='dark'] ::-webkit-scrollbar-thumb { background: var(--navy-600); }
+::-webkit-scrollbar-thumb:hover { background: var(--signal-blue); }
+
+/* ---- Selection ---- */
+::selection { background: var(--hydro-teal); color: var(--ink); }
+
+/* ---- Layout helpers ---- */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.section {
+  padding-top: var(--section-pad);
+  padding-bottom: var(--section-pad);
+  position: relative;
+}
+
+#main-content > section:nth-of-type(even) {
+  background: var(--bg-sunken);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 1rem;
+  background: var(--signal-blue);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-s);
+  z-index: 999;
+  transition: top var(--dur-fast) var(--ease-signal);
+}
+.skip-link:focus { top: 1rem; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

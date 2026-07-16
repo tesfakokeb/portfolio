@@ -1,0 +1,26 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--hydro-teal);
+  background: rgba(79, 211, 196, 0.12);
+  pointer-events: none;
+  z-index: 10000;
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  mix-blend-mode: difference;
+}
+
+.active {
+  width: 36px;
+  height: 36px;
+  margin-top: -8px;
+  margin-left: -8px;
+  background: rgba(79, 211, 196, 0.22);
+}
+
+@media (max-width: 900px) {
+  .cursor { display: none; }
+}

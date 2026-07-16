@@ -1,0 +1,230 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative gradient ribbon at top of card (shown when no image) */
+.card:not(:has(.imageWrap))::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-signal);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+}
+
+/* ---- Certificate Image ---- */
+.imageWrap {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  background: var(--bg-sunken);
+  position: relative;
+}
+
+.certImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: transform var(--dur-med) var(--ease-signal);
+}
+
+.certImage:hover {
+  transform: scale(1.05);
+}
+
+.pdfBadge {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--gradient-signal);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease-signal);
+}
+
+.pdfBadge svg {
+  font-size: 2rem;
+  opacity: 0.85;
+}
+
+.pdfBadge:hover {
+  opacity: 0.9;
+}
+
+/* Card inner content padding */
+.cardHeader,
+.meta,
+.skills,
+.actions {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+/* ---- Header ---- */
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-top: 1.25rem;
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-m);
+  background: var(--gradient-signal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.15rem;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(46, 125, 209, 0.25);
+}
+
+.headerText {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 0.3rem;
+  color: var(--text-primary);
+}
+
+.issuer {
+  font-size: 0.87rem;
+  color: var(--hydro-teal);
+  font-weight: 500;
+}
+
+/* ---- Meta row ---- */
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.75rem;
+}
+
+.date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--text-muted);
+}
+
+.credentialId {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  color: var(--text-muted);
+  background: var(--bg-sunken);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-s);
+}
+
+/* ---- Skills ---- */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding-top: 0.75rem;
+  margin-top: auto;
+}
+
+/* ---- Actions ---- */
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 0.75rem;
+  padding-bottom: 1.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.verifyLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--bg-sunken);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  transition: border-color var(--dur-fast) var(--ease-signal),
+              color var(--dur-fast) var(--ease-signal);
+}
+.verifyLink:hover {
+  border-color: var(--signal-blue);
+  color: var(--signal-blue);
+}
+
+/* ---- Lightbox ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  padding: 2rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.lightboxImage {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: var(--radius-m);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ---- Empty state ---- */
+.empty {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--text-muted);
+  grid-column: 1 / -1;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .imageWrap {
+    height: 150px;
+  }
+}

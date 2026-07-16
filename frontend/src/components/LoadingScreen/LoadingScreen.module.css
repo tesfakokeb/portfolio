@@ -1,0 +1,47 @@
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-deep);
+}
+
+.center {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.1);
+  stroke-width: 3;
+}
+
+.sweep {
+  fill: none;
+  stroke: var(--hydro-teal);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 264;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: #eef2f8;
+}

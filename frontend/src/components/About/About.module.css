@@ -1,0 +1,60 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: 3.5rem;
+}
+
+.bio p { margin-bottom: 1.1rem; }
+
+.pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+}
+.pillar { padding: 1.5rem; }
+.pillarLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hydro-teal);
+  margin-bottom: 0.6rem;
+}
+.pillar p { font-size: 0.92rem; color: var(--text-secondary); }
+
+.side { display: flex; }
+.educationCard { padding: 1.75rem; width: 100%; }
+.sideTitle {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 1.1rem;
+  margin-bottom: 1.4rem;
+  color: var(--signal-blue);
+}
+
+.eduList { display: flex; flex-direction: column; gap: 1.2rem; }
+.eduList li { display: flex; gap: 1rem; align-items: flex-start; }
+.eduYear {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  flex-shrink: 0;
+  padding-top: 0.15rem;
+  min-width: 3ch;
+}
+.eduDegree { font-weight: 600; color: var(--text-primary); font-size: 0.95rem; }
+.eduSchool { font-size: 0.85rem; color: var(--text-muted); }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .grid { grid-template-columns: 1fr; }
+  .pillars { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
