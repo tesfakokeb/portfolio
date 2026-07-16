@@ -33,7 +33,7 @@ export const profile = {
 
     email: "mailto:hopee2011@gmail.com",
   },
-  profilePicUrl: "/images/Tesfa.jpeg",
+  profilePicUrl: "/images/Tesfa_1.jpeg",
   cvUrl: "/CV/Resume_Tesfa_W_Meshesha.pdf",
   stats: [
     { label: "Years Experience", value: 6, suffix: "+" },

@@ -43,7 +43,7 @@ export default function Hero() {
         <motion.div className={styles.text}>
           <motion.span variants={item} className={styles.eyebrow}>
             <span className={styles.dot} />
-            AVAILABLE FOR RESEARCH COLLABORATION
+            AVAILABLE FOR RESEARCH COLLABORATION|AI APPLICATION DEVELOPMENT|DATA SCIENCE CONSULTING
           </motion.span>
 
           <motion.h1 variants={item} className={styles.name}>
@@ -67,7 +67,7 @@ export default function Hero() {
 
           <motion.div variants={item} className={styles.ctas}>
             <Button href={profile.cvUrl} variant="primary" icon={FaDownload} download>
-              Download CV
+              Download Resume
             </Button>
             <Button href="#projects" variant="secondary" icon={FaArrowRight} onClick={(e) => scrollTo(e, '#projects')}>
               View Projects
