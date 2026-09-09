@@ -24,6 +24,7 @@ export default function Contact() {
   const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (field) => (e) => {
     setForm((f) => ({ ...f, [field]: e.target.value }));
@@ -37,11 +38,32 @@ export default function Contact() {
     if (Object.keys(validation).length > 0) return;
 
     setStatus('loading');
+    setErrorMessage('');
     try {
       await api.post('/contact', form);
       setStatus('success');
       setForm(initialForm);
     } catch (err) {
+      // Surface the real cause. Previously every failure — a blocked origin, a
+      // cold-start timeout, a rate limit, a validation error — collapsed into
+      // the same generic message, which made this impossible to diagnose.
+      console.error('[contact] submission failed:', err);
+
+      const res = err?.response;
+      if (!res) {
+        setErrorMessage(
+          err?.code === 'ECONNABORTED'
+            ? 'The server took too long to respond. It may be waking up — please try again in a minute.'
+            : "Couldn't reach the server. Please check your connection and try again."
+        );
+      } else if (res.status === 429) {
+        setErrorMessage('Too many messages sent recently. Please try again in a little while.');
+      } else if (res.status === 400) {
+        const detail = res.data?.details?.[0]?.msg;
+        setErrorMessage(detail || 'Please check the form fields and try again.');
+      } else {
+        setErrorMessage(res.data?.message || 'The server could not send your message.');
+      }
       setStatus('error');
     } finally {
       setTimeout(() => setStatus((s) => (s === 'loading' ? 'idle' : s)), 100);
@@ -153,7 +175,7 @@ export default function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                     >
-                      <FaCheckCircle aria-hidden="true" /> Message sent — thank you, I'll reply soon.
+                      <FaCheckCircle aria-hidden="true" /> Message sent &mdash; thank you, I&apos;ll reply soon.
                     </motion.p>
                   )}
                   {status === 'error' && (
@@ -163,7 +185,10 @@ export default function Contact() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
                     >
-                      <FaExclamationCircle aria-hidden="true" /> Something went wrong. Please email me directly at {profile.email}.
+                      <FaExclamationCircle aria-hidden="true" />{' '}
+                      {errorMessage || 'Something went wrong.'}{' '}
+                      You can also email me directly at{' '}
+                      <a href={`mailto:${profile.email}`}>{profile.email}</a>.
                     </motion.p>
                   )}
                 </AnimatePresence>

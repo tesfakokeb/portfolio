@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaGraduationCap, FaEnvelope, FaArrowRight,FaDownload,FaFacebook,FaTwitter,FaInstagram } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaGraduationCap, FaEnvelope, FaArrowRight,FaDownload,FaFacebook,FaTwitter } from 'react-icons/fa';
 import { profile } from '../../data/profile.js';
 import { useTypingEffect } from '../../hooks/useTypingEffect.js';
 import ParticleBackground from '../ParticleBackground/ParticleBackground.jsx';
@@ -14,7 +14,6 @@ const socialIcons = [
   // { key: 'cv', icon: FaDownload, href: profile.cvUrl, label: 'Download CV' },
   { key: 'facebook', icon: FaFacebook, href: profile.social.facebook, label: 'Facebook' },
   { key: 'twitter', icon: FaTwitter, href: profile.social.twitter, label: 'Twitter' },
-  { key: 'instagram', icon: FaInstagram, href: profile.social.instagram, label: 'Instagram' },
 ];
 
 const container = {
@@ -81,7 +80,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.div variants={item} className={styles.socials}>
-            {socialIcons.map(({ key, icon: Icon, href, label }) => (
+            {socialIcons.filter((s) => s.href).map(({ key, icon: Icon, href, label }) => (
               <a key={key} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className={styles.socialIcon}>
                 <Icon aria-hidden="true" />
               </a>

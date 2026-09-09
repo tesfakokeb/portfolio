@@ -2,6 +2,8 @@ const path = require('path');
 const fs = require('fs/promises');
 const { pool } = require('../database/db');
 const asyncHandler = require('../utils/asyncHandler');
+const cloudinary = require('../config/cloudinary');
+const { useCloud } = require('../middleware/uploadMiddleware');
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // NAVBAR MANAGEMENT
@@ -191,6 +193,27 @@ const updateProfile = asyncHandler(async (req, res) => {
 // FILE UPLOADS
 // ═══════════════════════════════════════════════════════════════════════════════
 
+/**
+ * Helper: extract the Cloudinary public_id from a URL so we can delete it later.
+ * e.g. "https://res.cloudinary.com/.../portfolio/avatars/avatar_123.jpg"
+ *   → "portfolio/avatars/avatar_123"
+ */
+function extractPublicId(url) {
+  if (!url || !url.includes('cloudinary')) return null;
+  try {
+    const parts = url.split('/upload/');
+    if (parts.length < 2) return null;
+    // After /upload/ there may be a version (v12345/) then the public_id.ext
+    let tail = parts[1];
+    // Remove optional version prefix
+    tail = tail.replace(/^v\d+\//, '');
+    // Remove file extension
+    return tail.replace(/\.[^/.]+$/, '');
+  } catch {
+    return null;
+  }
+}
+
 const uploadCV = asyncHandler(async (req, res) => {
   if (!req.file) {
     return res.status(400).json({
@@ -199,7 +222,9 @@ const uploadCV = asyncHandler(async (req, res) => {
     });
   }
 
-  const cvUrl = `/uploads/cv/${req.file.filename}`;
+  // Cloudinary: req.file.path is the full URL
+  // Local disk: build the path manually
+  const cvUrl = useCloud ? req.file.path : `/uploads/cv/${req.file.filename}`;
 
   // Update profile with new CV URL
   await pool.execute(
@@ -222,28 +247,45 @@ const uploadProfilePicture = asyncHandler(async (req, res) => {
     });
   }
 
-  // Resize with sharp if available
-  let finalFilename = req.file.filename;
-  try {
-    const sharp = require('sharp');
-    const inputPath = req.file.path;
-    const ext = path.extname(inputPath);
-    const resizedName = `resized_${Date.now()}${ext}`;
-    const outputPath = path.join(path.dirname(inputPath), resizedName);
+  let pictureUrl;
 
-    await sharp(inputPath)
-      .resize(500, 500, { fit: 'cover', position: 'centre' })
-      .toFile(outputPath);
+  if (useCloud) {
+    // Cloudinary already resized via transformation params — URL is in req.file.path
+    pictureUrl = req.file.path;
+  } else {
+    // Local development: resize with sharp if available
+    let finalFilename = req.file.filename;
+    try {
+      const sharp = require('sharp');
+      const inputPath = req.file.path;
+      const ext = path.extname(inputPath);
+      const resizedName = `resized_${Date.now()}${ext}`;
+      const outputPath = path.join(path.dirname(inputPath), resizedName);
 
-    // Remove original, use resized
-    await fs.unlink(inputPath);
-    finalFilename = resizedName;
-  } catch (sharpErr) {
-    // sharp not installed or failed — use original file as-is
-    console.warn('[uploadProfilePicture] sharp resize skipped:', sharpErr.message);
+      await sharp(inputPath)
+        .resize(500, 500, { fit: 'cover', position: 'centre' })
+        .toFile(outputPath);
+
+      // Remove original, use resized
+      await fs.unlink(inputPath);
+      finalFilename = resizedName;
+    } catch (sharpErr) {
+      // sharp not installed or failed — use original file as-is
+      console.warn('[uploadProfilePicture] sharp resize skipped:', sharpErr.message);
+    }
+    pictureUrl = `/uploads/avatars/${finalFilename}`;
   }
 
-  const pictureUrl = `/uploads/avatars/${finalFilename}`;
+  // Delete previous Cloudinary asset if replacing
+  if (useCloud) {
+    const [rows] = await pool.execute('SELECT profile_picture_url FROM profile LIMIT 1');
+    if (rows.length > 0 && rows[0].profile_picture_url) {
+      const oldId = extractPublicId(rows[0].profile_picture_url);
+      if (oldId) {
+        try { await cloudinary.uploader.destroy(oldId); } catch { /* ignore */ }
+      }
+    }
+  }
 
   // Update profile
   await pool.execute(

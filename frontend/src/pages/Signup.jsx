@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaUserPlus, FaSpinner } from 'react-icons/fa';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE } from '../utils/apiBase';
 import styles from './Auth.module.css';
 
 export default function Signup() {
@@ -30,7 +31,7 @@ export default function Signup() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch(`${API_BASE}/auth/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fullName, email, password }),

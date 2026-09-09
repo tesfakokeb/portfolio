@@ -28,8 +28,12 @@ export default function Footer() {
               <a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin aria-hidden="true" /></a>
               <a href={profile.social.scholar} target="_blank" rel="noopener noreferrer" aria-label="Google Scholar"><FaGraduationCap aria-hidden="true" /></a>
               <a href={profile.social.email} aria-label="Email"><FaEnvelope aria-hidden="true" /></a>
-              <a href={profile.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebook aria-hidden="true" /></a>
-              <a href={profile.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter aria-hidden="true" /></a>
+              {profile.social.facebook && (
+                <a href={profile.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebook aria-hidden="true" /></a>
+              )}
+              {profile.social.twitter && (
+                <a href={profile.social.twitter} target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter aria-hidden="true" /></a>
+              )}
             </div>
           </div>
 
@@ -58,8 +62,12 @@ export default function Footer() {
               <li><a href={profile.social.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
               <li><a href={profile.social.scholar} target="_blank" rel="noopener noreferrer">Google Scholar</a></li>
               <li><a href={profile.social.email}>Email</a></li>
-              <li><a href={profile.social.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></li>
-              <li><a href={profile.social.twitter} target="_blank" rel="noopener noreferrer">Twitter</a></li>
+              {profile.social.facebook && (
+                <li><a href={profile.social.facebook} target="_blank" rel="noopener noreferrer">Facebook</a></li>
+              )}
+              {profile.social.twitter && (
+                <li><a href={profile.social.twitter} target="_blank" rel="noopener noreferrer">Twitter</a></li>
+              )}
             </ul>
           </div>
         </div>

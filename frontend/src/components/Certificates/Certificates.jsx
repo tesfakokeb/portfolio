@@ -6,9 +6,7 @@ import SectionHeading from '../ui/SectionHeading.jsx';
 import GlassCard from '../ui/GlassCard.jsx';
 import Badge from '../ui/Badge.jsx';
 import styles from './Certificates.module.css';
-
-// Backend origin for resolving uploaded file URLs (e.g. /uploads/certificates/...)
-const BACKEND_ORIGIN = import.meta.env.VITE_BACKEND_URL || '';
+import { API_BASE, resolveFileUrl } from '../../utils/apiBase';
 
 export default function Certificates() {
   const [certificates, setCertificates] = useState([]);
@@ -18,7 +16,7 @@ export default function Certificates() {
   useEffect(() => {
     const fetchCertificates = async () => {
       try {
-        const res = await fetch('/api/certificates');
+        const res = await fetch(`${API_BASE}/certificates`);
         if (!res.ok) throw new Error('API unavailable');
         const data = await res.json();
         if (data.certificates && data.certificates.length > 0) {
@@ -74,7 +72,7 @@ export default function Certificates() {
                   <div className={styles.imageWrap}>
                     {cert.image_url.endsWith('.pdf') ? (
                       <a
-                        href={`${BACKEND_ORIGIN}${cert.image_url}`}
+                        href={resolveFileUrl(cert.image_url)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.pdfBadge}
@@ -84,10 +82,10 @@ export default function Certificates() {
                       </a>
                     ) : (
                       <img
-                        src={`${BACKEND_ORIGIN}${cert.image_url}`}
+                        src={resolveFileUrl(cert.image_url)}
                         alt={cert.title}
                         className={styles.certImage}
-                        onClick={() => setLightbox(`${BACKEND_ORIGIN}${cert.image_url}`)}
+                        onClick={() => setLightbox(resolveFileUrl(cert.image_url))}
                       />
                     )}
                   </div>

@@ -2,6 +2,31 @@ const path = require('path');
 const fs = require('fs/promises');
 const { pool } = require('../database/db');
 const asyncHandler = require('../utils/asyncHandler');
+const cloudinary = require('../config/cloudinary');
+const { useCloud } = require('../middleware/uploadMiddleware');
+
+/**
+ * Helper: extract the Cloudinary public_id from a URL so we can delete it later.
+ */
+function extractPublicId(url) {
+  if (!url || !url.includes('cloudinary')) return null;
+  try {
+    const parts = url.split('/upload/');
+    if (parts.length < 2) return null;
+    let tail = parts[1];
+    tail = tail.replace(/^v\d+\//, '');
+    return tail.replace(/\.[^/.]+$/, '');
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Helper: determine if a URL is a local /uploads/... path (vs a full Cloudinary URL).
+ */
+function isLocalPath(url) {
+  return url && url.startsWith('/uploads/');
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PUBLIC — Get all certificates
@@ -45,7 +70,12 @@ const createCertificate = asyncHandler(async (req, res) => {
     }
   }
 
-  const imageUrl = req.file ? `/uploads/certificates/${req.file.filename}` : null;
+  // Cloudinary: req.file.path is the full URL
+  // Local disk: build the path manually
+  let imageUrl = null;
+  if (req.file) {
+    imageUrl = useCloud ? req.file.path : `/uploads/certificates/${req.file.filename}`;
+  }
 
   // Get next sort order
   const [maxRow] = await pool.execute(
@@ -107,14 +137,24 @@ const updateCertificate = asyncHandler(async (req, res) => {
 
   // Handle image upload — replace old file if new one provided
   if (req.file) {
-    const newImageUrl = `/uploads/certificates/${req.file.filename}`;
+    const newImageUrl = useCloud ? req.file.path : `/uploads/certificates/${req.file.filename}`;
     fields.push('image_url = ?');
     values.push(newImageUrl);
 
-    // Delete old file if it exists
+    // Delete old file
     if (existing[0].image_url) {
-      const oldPath = path.join(__dirname, '..', existing[0].image_url);
-      try { await fs.unlink(oldPath); } catch { /* file may not exist */ }
+      if (useCloud) {
+        // Delete from Cloudinary
+        const oldId = extractPublicId(existing[0].image_url);
+        if (oldId) {
+          const isRaw = existing[0].image_url.endsWith('.pdf');
+          try { await cloudinary.uploader.destroy(oldId, { resource_type: isRaw ? 'raw' : 'image' }); } catch { /* ignore */ }
+        }
+      } else if (isLocalPath(existing[0].image_url)) {
+        // Delete from local disk
+        const oldPath = path.join(__dirname, '..', existing[0].image_url);
+        try { await fs.unlink(oldPath); } catch { /* file may not exist */ }
+      }
     }
   }
 
@@ -153,8 +193,16 @@ const deleteCertificate = asyncHandler(async (req, res) => {
 
   // Delete uploaded file
   if (existing[0].image_url) {
-    const filePath = path.join(__dirname, '..', existing[0].image_url);
-    try { await fs.unlink(filePath); } catch { /* file may not exist */ }
+    if (useCloud) {
+      const oldId = extractPublicId(existing[0].image_url);
+      if (oldId) {
+        const isRaw = existing[0].image_url.endsWith('.pdf');
+        try { await cloudinary.uploader.destroy(oldId, { resource_type: isRaw ? 'raw' : 'image' }); } catch { /* ignore */ }
+      }
+    } else if (isLocalPath(existing[0].image_url)) {
+      const filePath = path.join(__dirname, '..', existing[0].image_url);
+      try { await fs.unlink(filePath); } catch { /* file may not exist */ }
+    }
   }
 
   await pool.execute('DELETE FROM certificates WHERE id = ?', [id]);

@@ -213,8 +213,9 @@ const forgotPassword = asyncHandler(async (req, res) => {
   );
 
   // Build reset URL (frontend route)
-  const clientOrigin = config.clientOrigins[0] || 'http://localhost:5173';
-  const resetUrl = `${clientOrigin}/reset-password?token=${resetToken}`;
+  // config.clientUrl is the public frontend URL; clientOrigins[0] is always a
+  // localhost default, which made every emailed reset link unusable.
+  const resetUrl = `${config.clientUrl}/reset-password?token=${resetToken}`;
 
   // Send email using existing mail service
   try {

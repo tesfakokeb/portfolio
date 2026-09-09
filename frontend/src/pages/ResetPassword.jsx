@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaLock, FaSpinner } from 'react-icons/fa';
+import { API_BASE } from '../utils/apiBase';
 import styles from './Auth.module.css';
 
 export default function ResetPassword() {
@@ -39,7 +40,7 @@ export default function ResetPassword() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/auth/reset-password', {
+      const res = await fetch(`${API_BASE}/auth/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, newPassword: password }),

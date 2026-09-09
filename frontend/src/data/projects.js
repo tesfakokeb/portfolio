@@ -27,8 +27,11 @@ export const projects = [
     tags: ["express", "js", "react", "nodejs", "API", "CSS", "DB", "mysql"],
     image: chatGPTImg,
     category: "AI-powered web apps",
-    github: "https://github.com/tesfakokeb/GTP-CLONE/",
-    demo: "https://github.com/tesfakokeb/GTP-CLONE/",
+    github: "https://github.com/tesfakokeb/GTP-CLONE",
+    // Use the STABLE production alias, not a per-deployment URL.
+    // Per-deployment URLs (…-ooqq9aqrj-hope1221.vercel.app) are protected by
+    // Vercel Authentication and show a login screen to everyone but you.
+    demo: "https://gtp-clone-theta.vercel.app",
     // featured: true,
   },
 
@@ -40,8 +43,9 @@ export const projects = [
     image: aiImg,
     tags: ["jsx", "react", "express", "nodejs", "API", "CSS", "DB", "mysql"],
     category: "AI-powered web apps",
-    github: "https://github.com/tesfakokeb/ai-powered-forum-project/",
-    demo: "https://github.com/tesfakokeb/ai-powered-forum-project/",
+    github: "https://github.com/tesfakokeb/ai-powered-forum-project",
+    demo: "https://ai-powered-forum-project.vercel.app",
+    // alt alias: https://ai-powered-forum-project-peach.vercel.app
     // featured: true,
   },
 
@@ -63,8 +67,8 @@ export const projects = [
       "mysql",
     ],
     category: "AI-powered web apps",
-    github: "https://github.com/tesfakokeb/Netflix_clone/",
-    demo: "https://github.com/tesfakokeb/Netflix_clone/",
+    github: "https://github.com/tesfakokeb/Netflix_clone",
+    demo: "https://netflix-clone-hope1221.vercel.app",
     // featured: true,
   },
 
@@ -76,8 +80,7 @@ export const projects = [
     image: reactAppleImg,
     tags: ["jsx", "React", "CSS"],
     category: "AI-powered web apps",
-    github: "https://github.com/tesfakokeb/react-apple/",
-    demo: "https://github.com/tesfakokeb/react-apple/",
+    github: "https://github.com/tesfakokeb/react-apple",
     featured: true,
   },
 
@@ -88,7 +91,7 @@ export const projects = [
       "A machine learning framework estimating daily discharge for over 8,000 river reaches worldwide by fusing satellite altimetry with hydrological priors.",
     image: globalDischargeImg,
     tags: ["Python", "FVCOM", "FORTRAN", "SWAT+", "GIS & Remote sensing"],
-    category: "Hydrology" , 
+    category: "Hydrology",
     GoogleScholar:
       "https://scholar.google.com/citations?user=C5UML0oAAAAJ&hl=en&oi=ao",
     featured: true,
@@ -102,8 +105,9 @@ export const projects = [
 
     tags: ["R", "MATLAB", "SWAT+", "Machine Learning"],
     category: "Machine Learning",
-    github: "https://github.com/",
-    demo: "https://github.com/",
+    github: "https://github.com/tesfakokeb/Carbon-model-source-code",
+    GoogleScholar:
+      "https://scholar.google.com/citations?user=C5UML0oAAAAJ&hl=en&oi=ao",
     // featured: false,
   },
   {
@@ -144,8 +148,8 @@ export const projects = [
     image: groundwaterFlowImg,
     tags: ["JavaScript", "React", "MODFLOW"],
     category: "Hydrology",
-    github: "https://github.com/",
-    demo: "https://github.com/",
+    GoogleScholar:
+      "https://scholar.google.com/citations?user=C5UML0oAAAAJ&hl=en&oi=ao",
     // featured: false,
   },
 
@@ -157,8 +161,8 @@ export const projects = [
     image: dataVisualizeImg,
     tags: ["React", "Mapbox GL", "Node.js", "MongoDB"],
     category: "Web Platform",
-    github: "https://github.com/",
-    demo: "https://github.com/",
+    GoogleScholar:
+      "https://scholar.google.com/citations?user=C5UML0oAAAAJ&hl=en&oi=ao",
     // featured: true,
   },
 ];

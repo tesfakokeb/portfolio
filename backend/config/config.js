@@ -6,6 +6,11 @@ function parseOrigins(str) {
     "http://127.0.0.1:5173",
     "http://localhost:5174",
     "http://127.0.0.1:5174",
+    // Deployed frontends. Kept in code (not only in CLIENT_ORIGINS) so that a
+    // missing or mistyped env var on the host can never break the live site.
+    "https://portfolio-v6z9.onrender.com",
+    "https://tesfaworku.com",
+    "https://www.tesfaworku.com",
   ];
 
   if (!str) return defaults;
@@ -21,6 +26,16 @@ module.exports = {
   port: process.env.PORT || 5000,
   nodeEnv: process.env.NODE_ENV || "development",
   clientOrigins: parseOrigins(process.env.CLIENT_ORIGINS),
+
+  // Public URL of the deployed frontend, used to build links inside emails
+  // (e.g. password reset). clientOrigins[0] is always a localhost default, so
+  // relying on it sent every reset link to http://localhost:5173.
+  clientUrl:
+    process.env.CLIENT_URL ||
+    parseOrigins(process.env.CLIENT_ORIGINS).find(
+      (o) => !o.includes("localhost") && !o.includes("127.0.0.1")
+    ) ||
+    "http://localhost:5173",
 
   // MySQL database
   db: {

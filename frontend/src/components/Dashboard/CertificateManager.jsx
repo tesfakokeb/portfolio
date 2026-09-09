@@ -2,9 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FaPlus, FaSave, FaTrash, FaEdit, FaTimes, FaUpload, FaSpinner, FaCertificate, FaExternalLinkAlt } from 'react-icons/fa';
 import { useApi } from '../../hooks/useApi';
 import styles from '../../pages/Dashboard.module.css';
-
-// Backend origin for resolving uploaded file URLs (e.g. /uploads/certificates/...)
-const BACKEND_ORIGIN = import.meta.env.VITE_BACKEND_URL || '';
+import { resolveFileUrl } from '../../utils/apiBase';
 
 const emptyCert = {
   title: '',
@@ -286,7 +284,7 @@ export default function CertificateManager() {
                 {/* Thumbnail */}
                 {cert.image_url && (
                   <a
-                    href={`${BACKEND_ORIGIN}${cert.image_url}`}
+                    href={resolveFileUrl(cert.image_url)}
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{ flexShrink: 0 }}
@@ -303,7 +301,7 @@ export default function CertificateManager() {
                       </div>
                     ) : (
                       <img
-                        src={`${BACKEND_ORIGIN}${cert.image_url}`}
+                        src={resolveFileUrl(cert.image_url)}
                         alt={cert.title}
                         style={{
                           width: 64, height: 64,

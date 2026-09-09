@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { FaSave, FaUpload, FaSpinner } from 'react-icons/fa';
 import { useApi } from '../../hooks/useApi';
+import { resolveFileUrl } from '../../utils/apiBase';
 import styles from '../../pages/Dashboard.module.css';
 
 export default function ProfileEditor() {
@@ -238,7 +239,7 @@ export default function ProfileEditor() {
             <h3 style={{ fontSize: '1rem', marginBottom: '1rem' }}>Profile Picture</h3>
             <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
               {profile.profile_picture_url ? (
-                <img src={profile.profile_picture_url} alt="Profile Preview" className={styles.avatarPreview} />
+                <img src={resolveFileUrl(profile.profile_picture_url)} alt="Profile Preview" className={styles.avatarPreview} />
               ) : (
                 <div className={styles.avatarPreview} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-sunken)', color: 'var(--text-muted)' }}>
                   No Image
@@ -274,7 +275,7 @@ export default function ProfileEditor() {
             
             {profile.cv_url && (
               <div style={{ padding: '0.75rem', background: 'var(--bg-sunken)', borderRadius: 'var(--radius-s)', marginBottom: '1rem', fontSize: '0.85rem', wordBreak: 'break-all' }}>
-                <a href={profile.cv_url} target="_blank" rel="noreferrer" style={{ color: 'var(--signal-blue)' }}>
+                <a href={resolveFileUrl(profile.cv_url)} target="_blank" rel="noreferrer" style={{ color: 'var(--signal-blue)' }}>
                   View Current CV
                 </a>
               </div>

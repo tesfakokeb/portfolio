@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { BACKEND_ORIGIN } from '../utils/apiBase';
 
 export function useApi() {
   const { token, logout } = useAuth();
@@ -16,7 +17,7 @@ export function useApi() {
         headers.set('Content-Type', 'application/json');
       }
 
-      const response = await fetch(url, {
+      const response = await fetch(`${BACKEND_ORIGIN}${url}`, {
         ...options,
         headers,
       });

@@ -28,8 +28,8 @@ export const profile = {
     github: "https://github.com/tesfakokeb/",
     linkedin: "https://www.linkedin.com/in/tesfa-worku-983ba459/",
     scholar:"https://scholar.google.com/citations?user=C5UML0oAAAAJ&hl=en&oi=ao",
-    Facebook: "https://www.facebook.com/tesfaworku.worku",
-    Twitter: "https://x.com/tesfaworku",
+    facebook: "https://www.facebook.com/tesfaworku.worku",
+    twitter: "https://x.com/tesfaworku",
 
     email: "mailto:hopee2011@gmail.com",
   },

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaSpinner, FaArrowLeft } from 'react-icons/fa';
+import { API_BASE } from '../utils/apiBase';
 import styles from './Auth.module.css';
 
 export default function ForgotPassword() {
@@ -15,7 +16,7 @@ export default function ForgotPassword() {
     setIsLoading(true);
 
     try {
-      const res = await fetch('/api/auth/forgot-password', {
+      const res = await fetch(`${API_BASE}/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
