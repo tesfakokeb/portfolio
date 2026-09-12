@@ -31,7 +31,12 @@ export const projects = [
     // Use the STABLE production alias, not a per-deployment URL.
     // Per-deployment URLs (…-ooqq9aqrj-hope1221.vercel.app) are protected by
     // Vercel Authentication and show a login screen to everyone but you.
-    demo: "https://gtp-clone-theta.vercel.app",
+    // Demo: "https://gtp-clone-git-main-hope1221.vercel.app/",
+    // Demo: "https://gtp-clone-nlvt450ie-hope1221.vercel.app/",
+    demo: "https://gtp-clone-4.onrender.com",
+
+    // Demo: "https://gtp-clone-pi.vercel.app/",
+    // demo: "https://gtp-clone-theta.vercel.app",
     // featured: true,
   },
 
