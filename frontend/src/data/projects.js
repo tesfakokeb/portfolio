@@ -73,7 +73,8 @@ export const projects = [
     ],
     category: "AI-powered web apps",
     github: "https://github.com/tesfakokeb/Netflix_clone",
-    demo: "https://netflix-clone-hope1221.vercel.app",
+    demo: "https://netflix-clone-one-pink-61.vercel.app/",
+    // demo: "https://netflix-clone-hope1221.vercel.app",
     // featured: true,
   },
 
